@@ -8,8 +8,7 @@ flask_web_journal/
 ├── .env
 │
 ├── instance/
-│   ├── dev_journal_db.db
-│   └── test_journal_db.db
+│   └── journal_db.db
 │
 ├── src/
 │   └── flask_web_journal/

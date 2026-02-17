@@ -7,19 +7,25 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-basedir = os.path.abspath(os.path.dirname(__file__))
 
-class Config:
+class BaseConfig:
     SECRET_KEY = os.getenv("SECRET_KEY")
+    DATABASE_URL = os.getenv("DATABASE_URL")
     
-class DevelopmentConfig(Config):
+class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_JOURNAL_DB")
     
-class ProductionConfig(Config):
+class ProductionConfig(BaseConfig):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("JOURNAL_DB")
     
-class TestingConfig(Config):
-    DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_JOURNAL_DB")
+class TestingConfig(BaseConfig):
+    TESTING = True
+    DEBUG = False
+    DATABASE_URL = "sqlite:///:memory:"
+
+config = {
+    'development' : DevelopmentConfig,
+    'production' : ProductionConfig,
+    'testing' : TestingConfig,
+    'default' : DevelopmentConfig,
+}
